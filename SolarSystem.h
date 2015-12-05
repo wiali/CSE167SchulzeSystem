@@ -37,10 +37,12 @@ public:
 
 	Sphere* headGeode;
 	Sphere* bodyGeode;
-	MatrixTransform* torsoMT;
+	///MatrixTransform* torsoMT;
 	MatrixTransform* headMT;
 	MatrixTransform* leftLegMT, *rightLegMT;
 	MatrixTransform* leftArmMT, *rightArmMT;
+
+	MatrixTransform* sunMT;
 
 	Group* root;
 

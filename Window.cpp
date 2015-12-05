@@ -62,8 +62,9 @@ void Window::initialize(void)
 	Globals::house.toWorld.identity();
     
     //Setup the cube's material properties
-    //Color color(0x23ff27ff);
-    //Globals::cube.material.color = color;
+    Color color(0x23ff27ff);
+    //Globals::system->
+	//Globals::cube.material.color = color;
 
 	//init skybox textures
 	/*Globals::skybox.front = new Texture("Skybox_Water222_front.ppm");
