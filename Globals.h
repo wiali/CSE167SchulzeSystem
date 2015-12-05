@@ -14,6 +14,7 @@
 #include "SpotLight.h"
 #include "PointLight.h"
 #include "Skybox.h"
+#include "SolarSystem.h"
 
 class Globals
 {
@@ -56,6 +57,11 @@ public:
 
 	static bool culling;
 	static bool showBoundingSpheres;
+
+	static Group* root;
+	static SolarSystem* system;
+
+	Matrix4 id;
 
 };
 

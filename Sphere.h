@@ -15,11 +15,6 @@ public:
 
 	Sphere(double, int, int);
 
-	/*void bounce(float radians);
-
-	virtual void draw(DrawData&);
-	virtual void update(UpdateData&);*/
-
 	void render();
 	void update(Matrix4);
 };

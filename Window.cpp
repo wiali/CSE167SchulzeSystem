@@ -89,22 +89,13 @@ void Window::initialize(void)
 	BezierCurve bc3 = BezierCurve(controlP9, controlP10, controlP11, controlP12);
 	BezierCurve bc4 = BezierCurve(controlP13, controlP14, controlP15, controlP16);
 
-	/*Globals::skybox.drawBezierCurve(bc1);
-	Globals::skybox.drawBezierCurve(bc2);
-	Globals::skybox.drawBezierCurve(bc3);
-	Globals::skybox.drawBezierCurve(bc4);*/
-
 	//get bezier curve points and place in array
 	Globals::skybox.getBZPoints(bc1, bc2, bc3, bc4);
 
-	/*for (int i = 50; i < 51; i++) {
-		for (int j = 0; j < 100; j++) {
-			//Globals::skybox.bzPointsTen[i][j].print("");
-			printf("i: %d, j: %d", i, j);
-			//Globals::skybox.bezierPoints[i][j].print("");
-			Globals::skybox.normals[i][j].print("");
-		}
-	}*/
+	Matrix4 id;
+	id.identity();
+
+	Globals::system = new SolarSystem(id);
 
 	//Globals::bunny->scale(14.72 * tan(0.523599));
 
@@ -200,7 +191,7 @@ void Window::displayCallback()
     //(if we didn't the light would move with the camera, why is that?)
     //Globals::light.bind(0);
 
-	//Globals::pointLight.bind(1);
+	Globals::pointLight.bind(1);
 	
 	//Globals::dirLight.bind(0);
 	//Globals::light->bind(0);
@@ -216,7 +207,10 @@ void Window::displayCallback()
 	identity.identity();
 	Globals::skybox.draw(identity);
 
-	Globals::skybox.drawFlag();
+	glEnable(GL_LIGHTING);
+	Globals::system->draw(identity);
+	glDisable(GL_LIGHTING);
+	//Globals::skybox.drawFlag();
 	if (Globals::light)
 	{
 		//Globals::light->draw(Globals::drawData);
