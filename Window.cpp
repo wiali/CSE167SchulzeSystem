@@ -63,7 +63,6 @@ void Window::initialize(void)
     
     //Setup the cube's material properties
     Color color(0x23ff27ff);
-    //Globals::system->
 	//Globals::cube.material.color = color;
 
 	//init skybox textures
@@ -173,7 +172,9 @@ void Window::displayCallback()
 {
 	//Globals::drawable = &Globals::skybox;
     //Clear color and depth buffers
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearStencil(0x4);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     
     //Set the OpenGL matrix mode to ModelView
     glMatrixMode(GL_MODELVIEW);
@@ -208,9 +209,10 @@ void Window::displayCallback()
 	identity.identity();
 	Globals::skybox.draw(identity);
 
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 	Globals::system->draw(identity);
-	glDisable(GL_LIGHTING);
+	Globals::system->update();
+	//glDisable(GL_LIGHTING);
 	//Globals::skybox.drawFlag();
 	if (Globals::light)
 	{
@@ -303,6 +305,11 @@ void Window::keyboardCallback(unsigned char key, int x, int y) {
 		Globals::light = &Globals::spotLight;
 
 	}	break;
+	case 'c':
+	{
+		Globals::showBoundingSpheres = !Globals::showBoundingSpheres;
+		printf("toggled collision detection, show bounding spheres val %d \n", Globals::showBoundingSpheres);
+	}
 	default:
 		break;
 	}

@@ -9,6 +9,7 @@ public:
 	 In what order?
 	 Passes resulting Matrix4 down to children with Group::draw(...)
 	*/
+	Vector3 center;
 	MatrixTransform();
 	MatrixTransform(Matrix4 mat);
 	~MatrixTransform();

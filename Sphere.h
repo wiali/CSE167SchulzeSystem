@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Drawable.h"
 #include "Geode.h"
+#include "Color.h"
 
 class Sphere : public Geode
 {
@@ -16,6 +17,8 @@ public:
 	Sphere(double, int, int);
 
 	void render();
+	void renderWire();
+	void renderHalo();
 	void update(Matrix4);
 };
 

@@ -3,24 +3,40 @@
 
 void Geode::draw(Matrix4 C) 
 {
-	/*	? Set ModelView matrix for current render
-	? Call render()*/
-	//setmodelview(C)
-	//render(myObject)
 	glMatrixMode(GL_MODELVIEW);
-	
 	glPushMatrix();
-	//glLoadMatrixf(C.ptr());
 	glMultMatrixf(C.ptr());
-
 	render();
-
 	glPopMatrix(); //?
 
+	//halo
+	
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glMultMatrixf(C.ptr());
+	renderHalo();//draw halo
+	glPopMatrix();
+
+	if (Globals::showBoundingSpheres) {
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glMultMatrixf(C.ptr());
+		glScalef(1.1, 1.1, 1.1);
+		renderWire();
+		glPopMatrix();
+	}
 }
 
 void Geode::update() {}
 void Geode::render()
+{
+}
+
+void Geode::renderWire()
+{
+}
+
+void Geode::renderHalo()
 {
 }
 
