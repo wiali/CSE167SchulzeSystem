@@ -16,6 +16,7 @@ protected:
 public:
     
     unsigned int id;
+	const char* name;
     
     static Texture* emptyTexture;
     

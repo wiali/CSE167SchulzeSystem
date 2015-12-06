@@ -280,7 +280,7 @@ void Window::keyboardCallback(unsigned char key, int x, int y) {
 		printf("2 pressed");
 		//control point light
 		//Globals::light->unbind();
-		
+
 		Globals::dirLight.unbind();
 		Globals::spotLight.unbind();
 		Globals::pointLight.unbind();
@@ -289,7 +289,7 @@ void Window::keyboardCallback(unsigned char key, int x, int y) {
 
 		Globals::light = &Globals::pointLight;
 		Globals::lightNum = 1;
-		
+
 	}	break;
 	case '3':
 	{
@@ -309,6 +309,19 @@ void Window::keyboardCallback(unsigned char key, int x, int y) {
 	{
 		Globals::showBoundingSpheres = !Globals::showBoundingSpheres;
 		printf("toggled collision detection, show bounding spheres val %d \n", Globals::showBoundingSpheres);
+		break;
+	}
+	case 'a':
+	{
+		Globals::showHaloEffect = !Globals::showHaloEffect;
+		printf("toggled halo effect, showing halo sphere\n");
+		break;
+	}
+	case 'r':
+	{
+		Globals::showOrbit = !Globals::showOrbit;
+		printf("toggled orbit effect\n");
+		break;
 	}
 	default:
 		break;

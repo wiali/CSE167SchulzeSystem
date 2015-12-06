@@ -17,7 +17,7 @@ Texture::Texture()
 Texture::Texture(const char* fname)
 {
     filename = fname;
-    
+	name = filename;
     GLuint texture[1];     // storage for one texture
     int twidth, theight;   // texture width/height [pixels]
     unsigned char* tdata;  // texture pixel data

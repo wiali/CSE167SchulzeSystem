@@ -23,12 +23,19 @@ void SolarSystem::init(Matrix4 C)
 	sphereGeode = new Sphere(1.0, 10, 10);
 	
 	//geodes
-	planet1Geode = new Sphere(radius1, 10, 10);
-	planet2Geode = new Sphere(radius2, 10, 10);
-	planet3Geode = new Sphere(radius3, 10, 10);
-	planet2_1Geode = new Sphere(radius2, 10, 10);
+	planet1Geode = new Sphere(radius1, 50, 50);
+	planet2Geode = new Sphere(radius2, 50, 50);
+	planet3Geode = new Sphere(radius3, 50, 50);
+	planet2_1Geode = new Sphere(radius2, 50, 50);
 	
-	sunGeode = new Sphere(3.0, 10.0, 10.0);
+	sunGeode = new Sphere(3.0, 50.0, 50.0);
+
+	//added textures
+	planet1Geode->tex = Texture("Mercury.ppm");
+	planet2Geode->tex = Texture("Venus.ppm");
+	planet3Geode->tex = Texture("Earth.ppm");
+	planet2_1Geode->tex = Texture("Mars.ppm");
+	sunGeode->tex = Texture("Sun.ppm");
 
 	cubeGeode = new Cube(cubeSize);
 	

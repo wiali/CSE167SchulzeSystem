@@ -39,6 +39,8 @@ bool Globals::debugMode = false; //bounding box
 
 bool Globals::culling = false;
 bool Globals::showBoundingSpheres = false;
+bool Globals::showHaloEffect = false;
+bool Globals::showOrbit = false;
 
 Group* Globals::root = new Group();
 SolarSystem* Globals::system;

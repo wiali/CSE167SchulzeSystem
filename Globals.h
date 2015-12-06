@@ -57,6 +57,8 @@ public:
 
 	static bool culling;
 	static bool showBoundingSpheres;
+	static bool showHaloEffect;
+	static bool showOrbit;
 
 	static Group* root;
 	static SolarSystem* system;
