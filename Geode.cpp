@@ -9,17 +9,15 @@ void Geode::draw(Matrix4 C)
 	render();
 	glPopMatrix(); //?
 
-	//halo
-	
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glMultMatrixf(C.ptr());
-	if (Globals::showHaloEffect)
+	if (Globals::showHaloEffect) // halo
 	{
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glMultMatrixf(C.ptr());
 		renderHalo();//draw halo
+		glPopMatrix();
 	}
-	glPopMatrix();
-	if (Globals::showOrbit)
+	if (Globals::showOrbit) // orbits
 	{
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
@@ -28,17 +26,21 @@ void Geode::draw(Matrix4 C)
 		renderOrbit();//draw orbits
 		glPopMatrix();
 	}
-	if (Globals::showBoundingSpheres) {
+	if (Globals::showBoundingSpheres) // bounding spheres
+	{
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
 		glMultMatrixf(C.ptr());
 		glScalef(1.1, 1.1, 1.1);
-		renderWire();
+		renderWire();	
 		glPopMatrix();
 	}
 }
 
 void Geode::update() {}
+void Geode::initShader()
+{
+}
 void Geode::render()
 {
 }

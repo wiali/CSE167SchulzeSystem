@@ -12,16 +12,21 @@ class Sphere : public Geode
 
 public:
 	GLUquadric * sphere = NULL;
+	GLUquadric * disk = NULL;
+	Shader * shader;
 	double radius;
 	int slices, stacks;
 	Texture tex;
+	Texture map;
 	double orbit;
 	Sphere(double, int, int);
 
 	void render();
+	void initShader();
 	void renderWire();
 	void renderHalo();
 	void renderOrbit();
+	void renderDisk();
 	void update(Matrix4);
 };
 

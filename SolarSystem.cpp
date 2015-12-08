@@ -32,9 +32,11 @@ void SolarSystem::init(Matrix4 C)
 
 	//added textures
 	planet1Geode->tex = Texture("Mercury.ppm");
-	planet2Geode->tex = Texture("Venus.ppm");
-	planet3Geode->tex = Texture("Earth.ppm");
-	planet2_1Geode->tex = Texture("Mars.ppm");
+	planet2Geode->tex = Texture("Earth.ppm");
+	planet2Geode->initShader();
+	planet3Geode->tex = Texture("Mars.ppm");
+	planet2_1Geode->tex = Texture("Venus.ppm");
+	planet2_1Geode->map = Texture("Ring.ppm");
 	sunGeode->tex = Texture("Sun.ppm");
 
 	cubeGeode = new Cube(cubeSize);
@@ -46,7 +48,8 @@ void SolarSystem::init(Matrix4 C)
 	temp = C;
 	sunMT = new MatrixTransform(temp);
 
-	//planet1
+	//planet1 
+
 	temp = C;
 	temp.makeTranslate(orbit1, 0.0, 0.0);
 	planet1MT = new MatrixTransform(temp);

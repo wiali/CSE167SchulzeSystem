@@ -8,6 +8,7 @@ public:
 	void update();
 	/*Implemented by subclasses*/
 	virtual void render();
+	virtual void initShader();
 	virtual void renderWire();
 	virtual void renderHalo();
 	virtual void renderOrbit();
