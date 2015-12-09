@@ -27,7 +27,7 @@ void Sphere::initShader()
 {
 		const char * aa = "Sky.vert";
 		const char * bb = "Sky.frag";
-		shader = new Shader(aa, bb);
+		//shader = new Shader(aa, bb);
 }
 void Sphere::render()
 {
@@ -62,7 +62,8 @@ void Sphere::renderWire()
 	glScalef(1.01, 1.01, 1.01);
 	//glColor3f(0.0, 0.0, 1.0);
 	glColor3f(this->wireframeColor[0], this->wireframeColor[1], this->wireframeColor[2]);
-	glutWireSphere(radius, 15, 15);	
+	//glutWireSphere(radius, 15, 15); 
+	glutWireCube(radius*2);
 }
 void Sphere::renderHalo() 
 {

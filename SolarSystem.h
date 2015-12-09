@@ -79,6 +79,7 @@ public:
 
 	void animation1();
 	void detectCollision(MatrixTransform* mt1, MatrixTransform* mt2, Geode*, Geode*);
+	void detectCollisionBox(MatrixTransform * mt1, MatrixTransform * mt2, Geode * gOne, Geode * gTwo);
 	void drawBoundingSpheres(Matrix4 C);
 	void animation2();
 

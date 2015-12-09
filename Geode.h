@@ -4,6 +4,7 @@
 class Geode : public Node {
 public:
 	Vector3 wireframeColor = Vector3(0.0, 0.0, 1.0);
+	float angle;
 	void draw(Matrix4 C);
 	void update();
 	/*Implemented by subclasses*/

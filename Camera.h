@@ -10,12 +10,12 @@ private:
     
 protected:
     
-   Matrix4 c;   //Camera Matrix
+   /*Matrix4 c;   //Camera Matrix
     Matrix4 ci;  //Inverse of Camera Matrix
-    
+    */
 public:
-	/*Matrix4 c;   //Camera Matrix
-	Matrix4 ci;  //Inverse of Camera Matrix*/
+	Matrix4 c;   //Camera Matrix
+	Matrix4 ci;  //Inverse of Camera Matrix
     
     Vector3 e;   //Center of Projection
     Vector3 d;   //Look At

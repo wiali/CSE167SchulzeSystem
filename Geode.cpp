@@ -26,11 +26,17 @@ void Geode::draw(Matrix4 C)
 		renderOrbit();//draw orbits
 		glPopMatrix();
 	}
-	if (Globals::showBoundingSpheres) // bounding spheres
+	if (Globals::showBoundingSpheres) // bounding boxes
 	{
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
-		glMultMatrixf(C.ptr());
+		Matrix4 t;
+		t.identity();
+		Matrix4 id;
+		//transform matrix to axis aligned
+		t = id.makeTranslate(this->center);
+		//t.print("t");
+		glMultMatrixf(t.ptr());
 		glScalef(1.1, 1.1, 1.1);
 		renderWire();	
 		glPopMatrix();

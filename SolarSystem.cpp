@@ -63,9 +63,9 @@ void SolarSystem::init(Matrix4 C)
 	planet2MT->addChild(planet2Geode);
 	sunMT->addChild(planet2MT);
 
-	//planet2
+	//planet2_1
 	temp = C;
-	temp.makeTranslate(-orbit2, 0.1, 0.0);
+	temp.makeTranslate(-orbit2, 0.0, 0.0);
 	planet2_1MT = new MatrixTransform(temp);
 	planet2_1MT->addChild(planet2_1Geode);
 	sunMT->addChild(planet2_1MT);
@@ -114,20 +114,29 @@ void SolarSystem::update()
 	//planet1
 	Matrix4 rotate;
 	planet1MT->M = rotate.makeRotateZ(0.001) * planet1MT->M;
+	planet1Geode->center = Vector3(planet1MT->M.get(3, 0), planet1MT->M.get(3, 1), planet1MT->M.get(3, 2));
 
 	//planet2
 	rotate.identity();
 	planet2MT->M = rotate.makeRotateZ(0.0015) * planet2MT->M;
+	planet2Geode->angle += 0.0015*180.0 / M_PI;
+	planet2Geode->center = Vector3(planet2MT->M.get(3, 0), planet2MT->M.get(3, 1), planet2MT->M.get(3, 2));
+	planet2Geode->center.print("planet 2 center");
 
 	//planet2_1 (will collide with planet2)
 	rotate.identity();
-	planet2_1MT->M = rotate.makeRotateZ(-0.0015) * planet2_1MT->M;
+	planet2_1MT->M = rotate.makeRotateZ(-0.0035) * planet2_1MT->M;
+	planet2_1Geode->angle += -0.0035*180.0/M_PI;
+	planet2_1Geode->center = Vector3(planet2_1MT->M.get(3,0), planet2_1MT->M.get(3, 1), planet2_1MT->M.get(3, 2));
+	planet2Geode->center.print("planet 2_1 center");
 
-	detectCollision(planet2MT, planet2_1MT, planet2Geode, planet2_1Geode);
+	//detectCollision(planet2MT, planet2_1MT, planet2Geode, planet2_1Geode);
+	detectCollisionBox(planet2MT, planet2_1MT, planet2Geode, planet2_1Geode);
 
 	//planet3
 	rotate.identity();
 	planet3MT->M = rotate.makeRotateZ(0.002) * planet3MT->M;
+	planet3Geode->center = Vector3(planet3MT->M.get(3, 0), planet3MT->M.get(3, 1), planet3MT->M.get(3, 2));
 
 	//update center vector
 	center = Vector3(sunMT->M.get(3, 0), sunMT->M.get(3, 1), sunMT->M.get(3, 2));
@@ -138,15 +147,6 @@ void SolarSystem::animation1()
 {
 	Matrix4 trans;
 	trans.identity();
-	//turn
-	/*if (counter == 210) {
-		counter = 0;
-		torsoMT->M = torsoMT->M * trans.makeRotateY(90 * M_PI / 180.0);
-		trans.identity();
-	}
-	//move
-	torsoMT->M = torsoMT->M * trans.makeTranslate(0.0, 0.0, -.2);
-	counter += 1;*/
 }
 
 void SolarSystem::detectCollision(MatrixTransform* mt1, MatrixTransform* mt2, Geode* gOne, Geode* gTwo)
@@ -169,6 +169,45 @@ void SolarSystem::detectCollision(MatrixTransform* mt1, MatrixTransform* mt2, Ge
 	}
 	else 
 	{//blue
+		gOne->wireframeColor = Vector3(0.0, 0.0, 1.0);
+		gTwo->wireframeColor = Vector3(0.0, 0.0, 1.0);
+	}
+
+}
+void SolarSystem::detectCollisionBox(MatrixTransform* mt1, MatrixTransform* mt2, Geode* gOne, Geode* gTwo)
+{
+	radius = radius2;
+	float Ax = mt1->M.get(3, 0); //printf("Ax: %f", Ax);
+	float Ay = mt1->M.get(3, 1);
+	float Az = mt1->M.get(3, 2);
+	float AxMin = min(Ax - radius, Ax + radius);
+	float AyMin = min(Ay - radius, Ay + radius);
+	float AzMin = min(Az - radius, Az + radius);
+	float AxMax = max(Ax - radius, Ax + radius);
+	float AyMax = max(Ay - radius, Ay + radius);
+	float AzMax = max(Az - radius, Az + radius);
+
+	float Bx = mt2->M.get(3, 0);
+	float By = mt2->M.get(3, 1);
+	float Bz = mt2->M.get(3, 2);
+	float BxMin = min(Bx - radius, Bx + radius);
+	float ByMin = min(By - radius, By + radius);
+	float BzMin = min(Bz-radius, Bz + radius);
+	float BxMax = max(Bx - radius, Bx + radius);
+	float ByMax = max(By - radius, By + radius);
+	float BzMax = max(Bz - radius, Bz + radius);	
+
+	//detect if bounding boxes intersect
+	if( (AxMin < BxMax) && (AxMax > BxMin) &&
+	    (AyMin < ByMax) && (AyMax > ByMin) &&
+		(AzMin < BzMax) && (AzMax > BzMin)) 
+	{
+		printf("planets collided!!!\n");
+		//set change wireframe color to be red
+		gOne->wireframeColor = Vector3(1.0, 0.0, 0.0);
+		gTwo->wireframeColor = Vector3(1.0, 0.0, 0.0);
+	} else {
+		//blue
 		gOne->wireframeColor = Vector3(0.0, 0.0, 1.0);
 		gTwo->wireframeColor = Vector3(0.0, 0.0, 1.0);
 	}
