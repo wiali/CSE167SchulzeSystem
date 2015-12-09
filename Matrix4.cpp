@@ -46,6 +46,10 @@ void Matrix4::set(float m00, float m01, float m02, float m03,
     m[3][3] = m33;
 }
 
+void Matrix4::setIndex(int c, int e, float v)
+{
+	m[c][e] = v;
+}
 float Matrix4::get(int column, int element)
 {
     return m[column][element];

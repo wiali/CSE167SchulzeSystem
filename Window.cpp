@@ -183,11 +183,40 @@ void Window::displayCallback()
     //This will save a copy of the current matrix so that we can
     //make changes to it and 'pop' those changes off later.
     glPushMatrix();
-    
+	if (Globals::followMerc)
+	{
+		Vector3 a(Globals::system->planet1MT->M.get(0, 0), Globals::system->planet1MT->M.get(0, 1), Globals::system->planet1MT->M.get(0, 2));
+		Vector3 b(Globals::system->planet1MT->M.get(1, 0), Globals::system->planet1MT->M.get(1, 1), Globals::system->planet1MT->M.get(1, 2));
+		Vector3 c(Globals::system->planet1MT->M.get(2, 0), Globals::system->planet1MT->M.get(2, 1), Globals::system->planet1MT->M.get(2, 2));
+		Vector3 d(Globals::system->planet1MT->M.get(3, 0), Globals::system->planet1MT->M.get(3, 1), Globals::system->planet1MT->M.get(3, 2));
+		//Globals::camera.e = a;
+		//Globals::camera.d = b;
+		//Globals::camera.up = c;
+		Globals::camera.c.setIndex(3, 0, d[0]);
+		Globals::camera.c.setIndex(3, 1, d[1]);
+		Globals::camera.c.setIndex(3, 2, d[2]);
+		Globals::camera.set(a,b,c);
+	}
+	if (Globals::followVenus)
+	{
+		Vector3 a(Globals::system->planet2MT->M.get(0, 0), Globals::system->planet2MT->M.get(0, 1), Globals::system->planet2MT->M.get(0, 2));
+		Vector3 b(Globals::system->planet2MT->M.get(1, 0), Globals::system->planet2MT->M.get(1, 1), Globals::system->planet2MT->M.get(1, 2));
+		Vector3 c(Globals::system->planet2MT->M.get(2, 0), Globals::system->planet2MT->M.get(2, 1), Globals::system->planet2MT->M.get(2, 2));
+		Vector3 d(Globals::system->planet2MT->M.get(3, 0), Globals::system->planet2MT->M.get(3, 1), Globals::system->planet2MT->M.get(3, 2));
+		//Globals::camera.e = a;
+		//Globals::camera.d = b;
+		//Globals::camera.up = c;
+		Globals::camera.c.setIndex(3, 0, d[0]);
+		Globals::camera.c.setIndex(3, 1, d[1]);
+		Globals::camera.c.setIndex(3, 2, d[2]);
+		Globals::camera.set(a, b, c);
+	}
+	//if (!Globals::followMerc && !Globals::followVenus)
+	//	Globals::camera.reset();
     //Replace the current top of the matrix stack with the inverse camera matrix
     //This will convert all world coordiantes into camera coordiantes
     glLoadMatrixf(Globals::camera.getInverseMatrix().ptr());
-    
+	//glLoadMatrixf(Globals::camera.getMatrix().ptr());
     //Bind the light to slot 0.  We do this after the camera matrix is loaded so that
     //the light position will be treated as world coordiantes
     //(if we didn't the light would move with the camera, why is that?)
@@ -259,52 +288,82 @@ void Window::keyboardCallback(unsigned char key, int x, int y) {
 	switch (key) {
 	case '0':
 	{
+		printf("0 pressed: Changing to Sun control\n");
 		//toggle light control
-		Globals::lightControl = !Globals::lightControl;
-		printf("Toggled light control\n");
-	}	break;
+		//Globals::lightControl = !Globals::lightControl;
+		//printf("Toggled light control\n");
+		Globals::followMerc = false;
+		Globals::followVenus = false;
+		Globals::followEarth = false;
+		Globals::followMars = false;
+		break;
+	}	
 	case '1':
 	{
+		printf("1 pressed: Changing to Mercury control\n");
+		Globals::followMerc = true;
+		Globals::followEarth = false;
+		Globals::followVenus = false;
+		Globals::followMars = false;
+		/*
 		//control directional light
 		//rotations change the direction of the light
-		//
+		
 		Globals::pointLight.unbind();
 		Globals::spotLight.unbind();
 
 		Globals::light = &Globals::dirLight;
 		Globals::dirLight.bind(0);
-		Globals::lightNum = 0;
+		Globals::lightNum = 0;*/
 	}	break;
 	case '2':
 	{
-		printf("2 pressed");
-		//control point light
-		//Globals::light->unbind();
+		printf("2 pressed: Changing to Venus Control\n");
+		Globals::followMerc = false;
+		Globals::followEarth = false;
+		Globals::followVenus = true;
+		Globals::followMars = false;
+		/*
+		control point light
+		Globals::light->unbind();
 
 		Globals::dirLight.unbind();
 		Globals::spotLight.unbind();
 		Globals::pointLight.unbind();
 		Globals::pointLight.bind(1);
-		//Globals::spotLight.bind(1);
+		Globals::spotLight.bind(1);
 
 		Globals::light = &Globals::pointLight;
-		Globals::lightNum = 1;
-
-	}	break;
+		Globals::lightNum = 1; */
+		break;
+	}
 	case '3':
 	{
-		printf("3 pressed");
-		//control spot light
-		//Globals::light->unbind();
+		printf("3 pressed: Changing to Earth Control\n");
+		Globals::followMerc = false;
+		Globals::followEarth = true;
+		Globals::followVenus = false;
+		Globals::followMars = false;
+		/*control spot light
+		Globals::light->unbind();
 		Globals::spotLight.unbind();
 		Globals::dirLight.unbind();
 		Globals::pointLight.unbind();
 		Globals::spotLight.bind(2);
 		Globals::lightNum = 2;
+		Globals::light = &Globals::spotLight;*/
 
-		Globals::light = &Globals::spotLight;
-
-	}	break;
+		break;
+	}
+	case '4':
+	{
+		printf("4 pressed: Changing to Mars Control\n");
+		Globals::followMerc = false;
+		Globals::followEarth = false;
+		Globals::followVenus = false;
+		Globals::followMars = true;
+		break;
+	}
 	case 'c':
 	{
 		Globals::showBoundingSpheres = !Globals::showBoundingSpheres;
@@ -371,7 +430,10 @@ void Window::specialFuncCallback(int key, int x, int y)
 		//bear
 		printf("F4 pressed\n");
 		select = 4;
-		Globals::camera.reset();
+		Vector3 e(0.0, 0.0, 20.0);
+		Vector3 d(0.0, 0.0, 0.0);
+		Vector3 u(0.0, 1.0, 0.0);
+		Globals::camera.set(e, d, u);
 		//Globals::drawable = Globals::bear;
 	}
 	
@@ -469,7 +531,6 @@ void Window::mouseCallback(int button, int state, int x, int y)
 
 
 }
-
 //TODO: Mouse Motion callbacks!
 void Window::motionCallback(int x, int y) 
 {
@@ -559,7 +620,6 @@ void Window::motionCallback(int x, int y)
 
 
 }
-
 Vector3 Window::trackBallMapping(int x, int y)
 {
 	Vector3 v;    // Vector v is the synthesized 3D position of the mouse location on the trackball

@@ -41,6 +41,10 @@ bool Globals::culling = false;
 bool Globals::showBoundingSpheres = false;
 bool Globals::showHaloEffect = false;
 bool Globals::showOrbit = false;
+bool Globals::followMerc = false;
+bool Globals::followVenus = false;
+bool Globals::followEarth = false;
+bool Globals::followMars = false;
 
 Group* Globals::root = new Group();
 SolarSystem* Globals::system;

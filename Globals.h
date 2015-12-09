@@ -59,6 +59,10 @@ public:
 	static bool showBoundingSpheres;
 	static bool showHaloEffect;
 	static bool showOrbit;
+	static bool followMars;
+	static bool followEarth;
+	static bool followVenus;
+	static bool followMerc;
 
 	static Group* root;
 	static SolarSystem* system;

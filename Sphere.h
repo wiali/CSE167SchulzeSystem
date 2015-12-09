@@ -12,6 +12,7 @@ class Sphere : public Geode
 
 public:
 	GLUquadric * sphere = NULL;
+	GLUquadric * bump = NULL;
 	GLUquadric * disk = NULL;
 	Shader * shader;
 	double radius;

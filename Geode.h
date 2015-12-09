@@ -12,4 +12,5 @@ public:
 	virtual void renderWire();
 	virtual void renderHalo();
 	virtual void renderOrbit();
+	virtual void renderDisk();
 };

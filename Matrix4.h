@@ -24,7 +24,7 @@ public:
     
     void set(float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float);
     float get(int,int);
-    
+	void setIndex(int, int, float);
     Matrix4& operator = (Matrix4);
     
     float* ptr();

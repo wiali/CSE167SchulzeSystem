@@ -12,7 +12,7 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-#define M_PI 3.1415926
+//#define M_PI 3.1415926
 
 static int window_width = 512, window_height = 512;
 static float* pixels = new float[window_width * window_height * 3];
