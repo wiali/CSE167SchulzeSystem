@@ -59,6 +59,11 @@ public:
 	static bool showBoundingSpheres;
 	static bool showHaloEffect;
 	static bool showOrbit;
+	static bool motion;
+	static bool showDispMap;
+	static bool showBumpMap;
+	static bool showNormalMap;
+
 	static bool followMars;
 	static bool followEarth;
 	static bool followVenus;

@@ -22,6 +22,7 @@ public:
     
     Texture(void);
     Texture(const char* filename);
+	Texture(const char * fname, int i);
     virtual ~Texture(void);
     
 	static unsigned char* loadPPM(const char*, int&, int&);

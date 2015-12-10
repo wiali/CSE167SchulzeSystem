@@ -18,7 +18,10 @@ public:
 	double radius;
 	int slices, stacks;
 	Texture tex;
+	Texture texNormal;
+	Texture texHeightMap;
 	Texture map;
+	Shader s = Shader("Disp.vert","Disp.frag");
 	double orbit;
 	Sphere(double, int, int);
 
@@ -27,6 +30,7 @@ public:
 	void renderWire();
 	void renderHalo();
 	void renderOrbit();
+	void drawWithMap();
 	void renderDisk();
 	void update(Matrix4);
 };

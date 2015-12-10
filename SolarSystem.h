@@ -31,7 +31,7 @@ public:
 	float maxAngle = 90 * M_PI / 180.0; //5 degrees
 	float minAngle = -maxAngle;
 
-	float radius1 = 0.5;
+	float radius1 = 2.5;//0.5;
 	float radius2 = 1.0;
 	float radius3 = 0.3;
 

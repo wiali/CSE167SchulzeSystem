@@ -143,8 +143,7 @@ void Window::idleCallback()
 	//Globals::bear->update(Globals::updateData);
 
 	//Globals::light->update(Globals::updateData);
-
-    
+	
     //Call the display routine to draw the cube
     displayCallback();
 }
@@ -239,8 +238,33 @@ void Window::displayCallback()
 	Globals::skybox.draw(identity);
 
 	//glEnable(GL_LIGHTING);
+	if (Globals::motion) {
+		Globals::system->update();
+	}
 	Globals::system->draw(identity);
-	Globals::system->update();
+
+	//bump map
+	if (Globals::showBumpMap) {
+		Globals::system->planet1Geode->texNormal.bind();
+		glTranslatef(20.0f, 0.0f, 6.0f);
+		glColor3f(1.0, 1.0, 1.0);
+		float size = 3.0f;
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f);
+		glVertex3f(-size, -size, 0.0f);
+
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex3f(size, -size, 0.0f);
+
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex3f(size, size, 0.0f);
+
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex3f(-size, size, 0.0f);
+		glEnd();
+		Globals::system->planet1Geode->texNormal.unbind();
+	}
+	
 	//glDisable(GL_LIGHTING);
 	//Globals::skybox.drawFlag();
 	if (Globals::light)
@@ -380,6 +404,36 @@ void Window::keyboardCallback(unsigned char key, int x, int y) {
 	{
 		Globals::showOrbit = !Globals::showOrbit;
 		printf("toggled orbit effect\n");
+		break;
+	}
+	case 'm':
+	{
+		Globals::motion = !Globals::motion;
+		printf("toggled motion\n");
+		break;
+	}
+	case 'd':
+	{
+		Globals::showDispMap = !Globals::showDispMap;
+		Globals::showBumpMap = false;
+		Globals::showNormalMap = false;
+		printf("toggled disp map\n");
+		break;
+	}
+	case 'b':
+	{
+		Globals::showBumpMap = !Globals::showBumpMap;
+		Globals::showDispMap = false;
+		Globals::showNormalMap = false;
+		printf("toggled bump map\n");
+		break;
+	}
+	case 'n':
+	{
+		Globals::showNormalMap = !Globals::showNormalMap;
+		Globals::showBumpMap = false;
+		Globals::showDispMap = false;
+		printf("toggled normal map\n");
 		break;
 	}
 	default:

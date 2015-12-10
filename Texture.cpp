@@ -52,6 +52,48 @@ Texture::Texture(const char* fname)
     //And unbind it!
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+Texture::Texture(const char* fname, int i)
+{
+	filename = fname;
+	name = filename;
+	GLuint texture[1];     // storage for one texture
+	int twidth, theight;   // texture width/height [pixels]
+	unsigned char* tdata;  // texture pixel data
+
+						   //Load image file
+	tdata = loadPPM(filename, twidth, theight);
+
+	//If the image wasn't loaded, can't continue
+	if (tdata == NULL)
+		return;
+
+	//Create ID for texture
+	glGenTextures(1, &texture[0]);
+	id = texture[0];
+
+	//Set this texture to be the one we are working with
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+	//Generate the texture
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, twidth, theight, 0, GL_RGB, GL_UNSIGNED_BYTE, tdata);
+
+	//Make sure no bytes are padded:
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	//Select GL_MODULATE to mix texture with quad color for shading:
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	//Use bilinear interpolation:
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//Use nearest interpolation:
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	//And unbind it!
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
 
 Texture::~Texture()
 {

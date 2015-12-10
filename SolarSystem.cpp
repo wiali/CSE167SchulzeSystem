@@ -32,8 +32,11 @@ void SolarSystem::init(Matrix4 C)
 
 	//added textures
 	planet1Geode->tex = Texture("Mercury.ppm");
+	planet1Geode->texNormal = Texture("normalmap.ppm");
+	planet1Geode->texHeightMap = Texture("MercuryDisplacement.ppm",1);
+
 	planet2Geode->tex = Texture("Earth.ppm");
-	planet2Geode->initShader();
+	//planet2Geode->initShader();
 	planet3Geode->tex = Texture("Mars.ppm");
 	planet2_1Geode->tex = Texture("Venus.ppm");
 	planet2_1Geode->map = Texture("Ring.ppm");
@@ -121,14 +124,14 @@ void SolarSystem::update()
 	planet2MT->M = rotate.makeRotateZ(0.0015) * planet2MT->M;
 	planet2Geode->angle += 0.0015*180.0 / M_PI;
 	planet2Geode->center = Vector3(planet2MT->M.get(3, 0), planet2MT->M.get(3, 1), planet2MT->M.get(3, 2));
-	planet2Geode->center.print("planet 2 center");
+	//planet2Geode->center.print("planet 2 center");
 
 	//planet2_1 (will collide with planet2)
 	rotate.identity();
 	planet2_1MT->M = rotate.makeRotateZ(-0.0035) * planet2_1MT->M;
 	planet2_1Geode->angle += -0.0035*180.0/M_PI;
 	planet2_1Geode->center = Vector3(planet2_1MT->M.get(3,0), planet2_1MT->M.get(3, 1), planet2_1MT->M.get(3, 2));
-	planet2Geode->center.print("planet 2_1 center");
+	//planet2Geode->center.print("planet 2_1 center");
 
 	//detectCollision(planet2MT, planet2_1MT, planet2Geode, planet2_1Geode);
 	detectCollisionBox(planet2MT, planet2_1MT, planet2Geode, planet2_1Geode);

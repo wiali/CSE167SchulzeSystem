@@ -3,7 +3,8 @@
 PointLight::PointLight() : Light() {
 
 	//setup spot light
-	Vector4 pointLightPos(0.0, 5.0, 10.0, 1.0);
+	//Vector4 pointLightPos(0.0, 5.0, 10.0, 1.0);
+	Vector4 pointLightPos(1.0, 5.0, 10.0, 1.0);
 	position = pointLightPos;
 	diffuseColor = Color(1.0, 1.0, 1.0);
 	//ambientColor = Color(1.0, 1.0, 1.0);

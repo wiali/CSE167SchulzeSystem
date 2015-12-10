@@ -25,9 +25,9 @@ Sphere::Sphere(double radius, int slices, int stacks)
 }
 void Sphere::initShader()
 {
-		const char * aa = "Sky.vert";
-		const char * bb = "Sky.frag";
-		//shader = new Shader(aa, bb);
+		const char * aa = "Disp.vert";
+		const char * bb = "Disp.frag";
+		s = Shader(aa,bb);
 }
 void Sphere::render()
 {
@@ -38,10 +38,109 @@ void Sphere::render()
 		glEnable(GL_LIGHT0);
 		glDisable(GL_DEPTH_TEST);
 	}
-	glColor4f(1.0, 1.0, 1.0, 0.0);
-	tex.bind();
-	gluSphere(sphere, radius, slices, stacks);
-	tex.unbind();
+	if (tex.name == "Mercury.ppm" && Globals::showDispMap) {		
+			
+			Shader s = Shader("Disp.vert", "Disp.frag");
+			s.bind();
+
+			/*glActiveTexture(GL_TEXTURE0);
+			int texture_location = glGetUniformLocation(s.getPid(), "colorMap");
+			glUniform1i(texture_location, 0);
+			tex.bind();*/
+
+			//glActiveTexture(GL_TEXTURE1);
+			int height_location = glGetUniformLocation(s.getPid(), "displacementMap");
+			glUniform1i(height_location, 1);
+			glActiveTexture(GL_TEXTURE0);
+			texHeightMap.bind();
+
+			//glColor4f(1.0, 1.0, 1.0, 0.0);
+			//gluSphere(sphere, radius, slices, stacks);
+			//quad for testing
+			/*float size = .05f;
+			float texX = 0.0f;
+			float texY = 0.0f;
+			glBegin(GL_QUADS);
+			for (int i = 0; i < 10; i++, texX += size) {
+				for (int j = 0; j < 10; j++, texY += size) {
+					glTexCoord2f(texX, texY);
+					glVertex3f(texX - size, texY - size, 0.0f);
+
+					glTexCoord2f(texX + size, texY);
+					glVertex3f(texX + size, texY - size, 0.0f);
+
+					glTexCoord2f(texX + size, texY+size);
+					glVertex3f(texX + size, texY + size, 0.0f);
+
+					glTexCoord2f(texX, texY+size);
+					glVertex3f(texX - size, texY + size, 0.0f);
+					//texY += size;
+				}
+				
+			}
+			glEnd();*/
+
+			float size = 5.0f;
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0f, 0.0f);
+			glVertex3f(-size, -size, 0.0f);
+
+			glTexCoord2f(1.0f, 0.0f);
+			glVertex3f(size, -size, 0.0f);
+
+			glTexCoord2f(1.0f, 1.0f);
+			glVertex3f(size, size, 0.0f);
+
+			glTexCoord2f(0.0f, 1.0f);
+			glVertex3f(-size, size, 0.0f);
+			glEnd();
+
+			//glActiveTexture(GL_TEXTURE1);
+			glActiveTexture(GL_TEXTURE0);
+			texHeightMap.unbind();
+
+			//glActiveTexture(GL_TEXTURE0);
+			//tex.unbind();
+
+			s.unbind();
+			//reset active texture
+			glActiveTexture(GL_TEXTURE0); 
+	}
+	else if (tex.name == "Mercury.ppm" && Globals::showBumpMap) {
+		Shader s = Shader("Bump.vert", "Bump.frag");
+		glColor4f(1.0, 1.0, 1.0, 0.0);
+		s.bind();
+
+		glActiveTexture(GL_TEXTURE0);
+		int texture_location = glGetUniformLocation(s.getPid(), "color_texture");
+		glUniform1i(texture_location, 0);
+		tex.bind();
+
+		glActiveTexture(GL_TEXTURE1);
+		int normal_location = glGetUniformLocation(s.getPid(), "normal_texture");
+		glUniform1i(normal_location, 1);
+		texNormal.bind();
+
+		glColor4f(1.0, 1.0, 1.0, 0.0);
+		gluSphere(sphere, radius, slices, stacks);
+
+		glActiveTexture(GL_TEXTURE1);
+		texNormal.unbind();
+
+		glActiveTexture(GL_TEXTURE0);
+		tex.unbind();
+
+		s.unbind();
+		//reset active texture
+		glActiveTexture(GL_TEXTURE0);
+	}
+	else {
+		glColor4f(1.0, 1.0, 1.0, 0.0);
+		tex.bind();
+		gluSphere(sphere, radius, slices, stacks);
+		tex.unbind();
+	}
+
 	if (tex.name == "Venus.ppm")
 	{
 		map.bind();
@@ -122,6 +221,7 @@ void Sphere::renderOrbit()
 		glEnable(GL_LIGHTING);
 	}
 }
+
 void Sphere::renderDisk() // for rings
 { /*
 	if (tex.name != "Sun.ppm")
@@ -182,29 +282,5 @@ void Sphere::renderDisk() // for rings
 void Sphere::update(Matrix4 C)
 {
 }
-/*
-void Sphere::draw(DrawData& data)
-{
-material.apply();
-
-glMatrixMode(GL_MODELVIEW);
-
-glPushMatrix();
-glMultMatrixf(toWorld.ptr());
-
-glutSolidSphere(radius, slices, stacks);
-
-glPopMatrix();
-}
-
-void Sphere::bounce(float radians)
-{
-
-}
-
-void Sphere::update(UpdateData& data)
-{
-//
-}*/
 
 
